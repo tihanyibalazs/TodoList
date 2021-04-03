@@ -1,0 +1,59 @@
+﻿@model IEnumerable<TodoList.ViewModel.TodoViewModel>
+
+
+@if (ViewBag.Error != null)
+{
+    <p style="color:red">@ViewBag.Error</p>
+}
+
+<div>
+    <a class="btn btn-success" asp-action="Create">New</a>
+</div>
+
+<div>
+    <table class="table">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @if (item.Done)
+                {
+                    <tr class="table-secondary">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TodoDate)
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr class="table-primary">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TodoDate)
+                        </td>
+                        <td>
+                            <a asp-action="Done" asp-route-id="@item.Id" style="color:greenyellow">Done</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+</div>
+<div>
+    <ul class="pagination pagination-lg">
+        <li class="page-item">
+            <a class="page-link" asp-action="Index" asp-route-pageNumber="@((int)TempData.Peek("pageNumber")-1)">&laquo;</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" asp-action="Index" asp-route-pageNumber="@((int)TempData.Peek("pageNumber")+1)">&raquo;</a>
+        </li>
+    </ul>
+</div>
